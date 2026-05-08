@@ -39,7 +39,7 @@ async def add_data(request:Request,data1:data ,db:AsyncSession):
     if count > 5:
         return JSONResponse(
             status_code=429,  
-            content={"status": "limit_exceeded"}
+            content={"status": "limit_exceeded_try_again"}
         )
     
     clean_password=data1.password.strip()
