@@ -13,13 +13,16 @@ cloudinary.config(
   secure=True   
    )
 async def img(request:Request,file1:File):
-    if r.get(f"{request.client.host}:img") > 5:
+    count=r.incr(f"{request.client.host}:img")
+    if count> 5:
         return JSONResponse(
             status_code=440,
             content={
                 "status":"limit_exceeded"
             }
         )
+    if count==1:
+        r.expire(f"{request.client.host}:img",60)
     if file1.size<2*1024*1024:
         result=cloudinary.uploader.upload(file1.file)
         v=r.incr(f"{request.client.host}:img")

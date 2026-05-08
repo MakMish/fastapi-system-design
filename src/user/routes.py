@@ -1,4 +1,4 @@
-from fastapi import APIRouter,Depends,UploadFile,File,Form
+from fastapi import APIRouter,Depends,UploadFile,File,Form,BackgroundTasks
 import logging
 from src.user.ai import aiit
 from src.tasks import asre
@@ -43,7 +43,6 @@ async def acc_ver(acc_tok1:str):
 @router.post("/ask")
 async def askit(request1:Request,data:deta2):
     return await aiit(request=request1,task=data.query)
-
 @router.post("/try")
 def ash(Email:EmailStr=Form(...)):
     asre.apply_async(args=[Email],eta=data1()+timedelta(minutes=2))

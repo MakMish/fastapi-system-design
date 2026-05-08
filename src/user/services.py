@@ -30,18 +30,18 @@ async def all_data(db:AsyncSession=Depends(get_db)):
         return data
 
 async def add_data(request:Request,data1:data ,db:AsyncSession):
-    count=r.get(f"{request.client.host}:add")
-    if count.int>5:
+    host = request.client.host
+    key = f"{host}:register"
+
+    count = r.incr(key)
+    if count == 1:
+        r.expire(key, 60)   
+    if count > 5:
         return JSONResponse(
-            status_code=440,
-            content={
-                "status":"limit_exceeded"
-            }
+            status_code=429,  
+            content={"status": "limit_exceeded"}
         )
-    v=r.incr(f"{request.client.host}:add")
-    if v.int==1:
-        r.expire(f"{request.client.host}:add",60)
-    print(v)
+    
     clean_password=data1.password.strip()
     token=await create_refresh_token({"email":data1.email})
     user=impexp(

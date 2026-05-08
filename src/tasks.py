@@ -1,9 +1,11 @@
 import random
+from src.dbmodel import Setting
 import ssl
 from pydantic import EmailStr
 import smtplib
 from src.dbmodel import Setting
 from celery import Celery
+
 celery_app=Celery("mytask",broker=Setting().redis_url,backend=Setting().redis_url)
 celery_app.conf.broker_use_ssl = {
     "ssl_cert_reqs": ssl.CERT_NONE
@@ -25,4 +27,4 @@ def asre(email:EmailStr):
         "status":"done"
     }
 
-# cmd is celery -A tasks.celery_app worker --pool=solo --loglevel=info
+# cmd is celery -A tasks.celery_app worker --pool=solo --loglevel=info 

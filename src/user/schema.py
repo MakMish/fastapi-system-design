@@ -4,7 +4,7 @@ from datetime import datetime
 def dateaajki():
    return datetime.now().date
 class impexp(Base):
-    __tablename__="user_table"
+    __tablename__="user_table_syst"
     id=Column(Integer,autoincrement=True,primary_key=True)
     Name=Column(VARCHAR(30),unique=True,nullable=False)
     email=Column(VARCHAR(30),unique=True,nullable=False)
