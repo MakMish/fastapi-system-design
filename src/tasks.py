@@ -7,13 +7,7 @@ from src.dbmodel import Setting
 from celery import Celery
 
 celery_app=Celery("mytask",broker=Setting().redis_url,backend=Setting().redis_url)
-celery_app.conf.broker_use_ssl = {
-    "ssl_cert_reqs": ssl.CERT_NONE
-}
 
-celery_app.conf.redis_backend_use_ssl = {
-    "ssl_cert_reqs": ssl.CERT_NONE
-}
 @celery_app.task(max_retries=3)
 def asre(email:EmailStr):
     otp = random.randint(100000,999999)
