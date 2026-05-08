@@ -1,7 +1,7 @@
 from fastapi import APIRouter,Depends,UploadFile,File,Form
 import logging
 from src.user.ai import aiit
-from tasks import asre
+from src.tasks import asre
 from fastapi.requests import Request
 from fastapi.security import OAuth2PasswordRequestForm
 from src.user.model import urespmode
